@@ -1,0 +1,38 @@
+Using the default profile...
+Feature: search for movies by director
+  As a movie buff
+  So that I can find movies with my favorite director
+  I want to include and serach on director information in movies I enter
+
+  Background: movies in database[90m      # features/directors.feature:7[0m
+    [32mGiven the following movies exist:[90m # features/step_definitions/movies_steps.rb:2[0m[0m
+      | [36mtitle       [0m[0m |[0m [36mrating[0m[0m |[0m [36mdirector    [0m[0m |[0m [36mrelease_date[0m[0m |[0m
+      | [36mStar Wars   [0m[0m |[0m [36mPG    [0m[0m |[0m [36mGeorge Lucas[0m[0m |[0m [36m1977-05-25  [0m[0m |[0m
+      | [36mBlade Runner[0m[0m |[0m [36mPG    [0m[0m |[0m [36mRidley Scott[0m[0m |[0m [36m1982-06-25  [0m[0m |[0m
+      | [36mAlien       [0m[0m |[0m [36mR     [0m[0m |[0m [36m            [0m[0m |[0m [36m1979-05-25  [0m[0m |[0m
+      | [36mTHX-1138    [0m[0m |[0m [36mR     [0m[0m |[0m [36mGeorge Lucas[0m[0m |[0m [36m1971-03-11  [0m[0m |[0m
+
+  Scenario: add director to existing movie[90m                # features/directors.feature:16[0m
+    [32mWhen I go to [32m[1mthe edit page for "Alien"[0m[0m[32m[90m                # features/step_definitions/web_steps.rb:48[0m[0m
+    [32mAnd I fill in "[32m[1mDirector[0m[0m[32m" with "[32m[1mRidley Scott[0m[0m[32m"[90m          # features/step_definitions/web_steps.rb:60[0m[0m
+    [32mAnd I press "[32m[1mUpdate Movie Info[0m[0m[32m"[90m                       # features/step_definitions/web_steps.rb:52[0m[0m
+    [32mThen the director of "[32m[1mAlien[0m[0m[32m" should be "[32m[1mRidley Scott[0m[0m[32m"[90m # features/step_definitions/movies_steps.rb:27[0m[0m
+
+  Scenario: find movie with same director[90m                       # features/directors.feature:22[0m
+    [32mGiven I am on [32m[1mthe details page for "Star Wars"[0m[0m[32m[90m              # features/step_definitions/web_steps.rb:44[0m[0m
+    [32mWhen I follow "[32m[1mFind Movies With Same Director[0m[0m[32m"[90m              # features/step_definitions/web_steps.rb:56[0m[0m
+    [32mThen I should be on [32m[1mthe Similar Movies page for "Star Wars"[0m[0m[32m[90m # features/step_definitions/web_steps.rb:230[0m[0m
+    [32mAnd I should see "[32m[1mTHX-1138[0m[0m[32m"[90m                                 # features/step_definitions/web_steps.rb:105[0m[0m
+    [32mBut I should not see "[32m[1mBlade Runner[0m[0m[32m"[90m                         # features/step_definitions/web_steps.rb:123[0m[0m
+
+  Scenario: can't find similar movies if we don't know director (sad path)[90m # features/directors.feature:29[0m
+    [32mGiven I am on [32m[1mthe details page for "Alien"[0m[0m[32m[90m                             # features/step_definitions/web_steps.rb:44[0m[0m
+    [32mThen I should not see "[32m[1mRidley Scott[0m[0m[32m"[90m                                   # features/step_definitions/web_steps.rb:123[0m[0m
+    [32mWhen I follow "[32m[1mFind Movies With Same Director[0m[0m[32m"[90m                         # features/step_definitions/web_steps.rb:56[0m[0m
+    [32mThen I should be on [32m[1mthe RottenPotatoes home page[0m[0m[32m[90m                       # features/step_definitions/web_steps.rb:230[0m[0m
+    [32mAnd I should see "[32m[1m'Alien' has no director info[0m[0m[32m"[90m                        # features/step_definitions/web_steps.rb:105[0m[0m
+
+3 scenarios ([32m3 passed[0m)
+17 steps ([32m17 passed[0m)
+0m0.281s
+Coverage report generated for Cucumber Features, RSpec to /home/ec2-user/environment/hw-acceptance-unit-test-cycle/rottenpotatoes/coverage. 50 / 56 LOC (89.29%) covered.
