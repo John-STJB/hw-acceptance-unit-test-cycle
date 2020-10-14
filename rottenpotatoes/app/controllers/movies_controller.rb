@@ -61,6 +61,7 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
   
+  #Creat new Method for search directors
   def search_directors
     movie = Movie.find(params[:id])
     @similar_movies = Movie.where('id != ? AND director = ?', params[:id], movie.director)
